@@ -61,8 +61,9 @@ Then open **http://localhost:3000**.
 | 10 | Made the overview page fuller: an intro to Next.js, a progress box, "How each topic works", and the full roadmap with one-line descriptions. |
 | 11 | Wrote this guide. |
 
-> ⚠️ **Nothing has been committed to git yet.** All changes are in the working folder.
-> To save them: `git add -A` and then `git commit -m "Set up learning project and topics blueprint"`.
+> ✅ **Saved on GitHub:** https://github.com/anushree-synterra/nextjs-learning (branch `main`).
+> After each lesson, save and upload with:
+> `git add -A`, then `git commit -m "Learned <topic>"`, then `git push`.
 
 ---
 
