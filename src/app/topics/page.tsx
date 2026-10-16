@@ -2,10 +2,10 @@ import Link from "next/link";
 import { allTopics, blueprint, learnedTopics, nextTopic } from "@/learning/topics";
 
 const steps = [
-  { title: "Learn", text: "A short explanation of one topic, in plain words." },
-  { title: "Build", text: "We write real code in this project and see it in the browser." },
-  { title: "Practice", text: "You try a small change on your own." },
-  { title: "Note", text: "We save what we learned and the code here. The topic gets a ✓." },
+  { title: "Learn", text: "One topic per day: what it is, why we use it and when, in plain words." },
+  { title: "Build", text: "You write the code yourself in this project and see it in the browser." },
+  { title: "Challenges", text: "Small levels, from super easy to bigger, until it really makes sense." },
+  { title: "Notes + quiz", text: "We save the theory, code, output and a revision quiz here. The topic gets a ✓." },
 ];
 
 export default function TopicsPage() {

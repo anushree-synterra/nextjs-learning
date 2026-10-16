@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BrowserOutput, CodeBlock, NoteBlock, Rich } from "@/components/notes";
+import { Quiz } from "@/components/quiz";
 import { allTopics, getStageName, getTopic, type Topic } from "@/learning/topics";
 
 export function generateStaticParams() {
@@ -36,33 +38,143 @@ export default async function TopicPage({ params }: PageProps<"/topics/[slug]">)
     );
   }
 
+  const notes = topic.notes;
+  if (!notes) notFound();
+
   return (
-    <article>
-      <p className="text-sm text-zinc-200">{getStageName(slug)}</p>
+    <article className="pb-6">
+      <p className="text-sm text-zinc-400">
+        {getStageName(slug)} · Topic {index + 1} of {allTopics.length}
+      </p>
       <h1 className="mt-1 text-3xl font-bold text-zinc-100">{topic.title}</h1>
-      <p className="mt-1 text-sm text-zinc-200">Learned on {topic.learnedOn}</p>
+      <p className="mt-2 text-sm text-emerald-400">✓ Learned on {notes.learnedOn}</p>
 
-      <h2 className="mt-10 border-b border-zinc-800 pb-1 text-xl font-semibold text-zinc-100">What we learned</h2>
-      <p className="mt-3 leading-7 text-zinc-200">{topic.summary}</p>
+      <div className="mt-6 rounded-lg border border-zinc-800 bg-zinc-900 p-5">
+        <p className="text-xs font-medium uppercase tracking-wide text-zinc-400">In one line</p>
+        <p className="mt-1 leading-7 text-zinc-200">{notes.summary}</p>
+      </div>
 
-      <h2 className="mt-10 border-b border-zinc-800 pb-1 text-xl font-semibold text-zinc-100">Key points</h2>
-      <ul className="mt-3 list-disc space-y-1 pl-6 text-zinc-200">
-        {topic.points?.map((point) => (
-          <li key={point}>{point}</li>
+      <nav className="mt-6 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+        {parts.map((part) => (
+          <a key={part.id} href={`#${part.id}`} className="text-sky-400 hover:text-sky-300">
+            {part.title}
+          </a>
+        ))}
+      </nav>
+
+      {/* Part 1 · Theory */}
+      <PartHeading id="theory" />
+      <div className="space-y-10">
+        {notes.theory.map((section, i) => (
+          <section key={section.title}>
+            <h3 className="text-lg font-semibold text-zinc-100">
+              <span className="mr-2 text-zinc-500">{i + 1}.</span>
+              {section.title}
+            </h3>
+            <div className="mt-3 space-y-4">
+              {section.blocks.map((block, b) => (
+                <NoteBlock key={b} block={block} />
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      {/* Part 2 · Practical */}
+      <PartHeading id="practical" />
+      <p className="leading-7 text-zinc-300">The challenges we solved, from easiest to hardest: the code we wrote and what the browser showed.</p>
+      <div className="mt-6 space-y-10">
+        {notes.challenges.map((c) => (
+          <section key={c.level}>
+            <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">Level {c.level}</p>
+            <h3 className="text-lg font-semibold text-zinc-100">{c.title}</h3>
+            <p className="mt-1 text-zinc-300">{c.task}</p>
+            <div className="mt-4 grid gap-4">
+              <CodeBlock file={c.file} code={c.code} />
+              <div>
+                <p className="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">Output</p>
+                <div className="grid gap-3">
+                  {c.output.map((o) => (
+                    <BrowserOutput key={o.url} url={o.url} view={o.view} />
+                  ))}
+                </div>
+              </div>
+            </div>
+            <p className="mt-3 text-sm leading-6 text-zinc-300">
+              <span className="text-zinc-500">What this taught us:</span> {c.learned}
+            </p>
+          </section>
+        ))}
+      </div>
+
+      {/* Key points */}
+      <PartHeading id="key-points" />
+      <ul className="space-y-2">
+        {notes.keyPoints.map((point) => (
+          <li key={point} className="flex gap-3 leading-7 text-zinc-300">
+            <span className="text-emerald-400">✓</span>
+            <span>
+              <Rich text={point} />
+            </span>
+          </li>
         ))}
       </ul>
 
-      <h2 className="mt-10 border-b border-zinc-800 pb-1 text-xl font-semibold text-zinc-100">Code we used</h2>
-      {topic.code?.map((sample) => (
-        <div key={sample.file} className="mt-4">
-          <p className="rounded-t border border-b-0 border-zinc-800 bg-zinc-800 px-4 py-1.5 font-mono text-xs text-zinc-200">{sample.file}</p>
-          <pre className="overflow-x-auto rounded-b border border-zinc-800 bg-zinc-900 p-4 text-sm text-zinc-200">{sample.code}</pre>
-          <p className="mt-2 text-sm text-zinc-200">💡 {sample.explain}</p>
-        </div>
-      ))}
+      {/* Common mistakes */}
+      <PartHeading id="mistakes" />
+      <div className="space-y-3">
+        {notes.mistakes.map((m) => (
+          <div key={m.wrong} className="rounded-lg border border-zinc-800 p-4 text-sm">
+            <p className="font-mono text-rose-300">❌ {m.wrong}</p>
+            <p className="mt-1 font-mono text-emerald-300">✅ {m.right}</p>
+            <p className="mt-2 text-zinc-400">{m.why}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Revision quiz */}
+      <PartHeading id="quiz" />
+      <p className="leading-7 text-zinc-300">
+        Come back later and test yourself. Answer each question in your head first, then open it to check.
+      </p>
+      <h3 className="mt-6 text-lg font-semibold text-zinc-100">Short questions</h3>
+      <div className="mt-3 space-y-2">
+        {notes.questions.map((q, i) => (
+          <details key={q.question} className="group rounded-lg border border-zinc-800 px-4 py-3">
+            <summary className="cursor-pointer list-none text-zinc-200 marker:hidden">
+              <span className="mr-2 text-zinc-500">Q{i + 1}.</span>
+              <Rich text={q.question} />
+              <span className="ml-2 text-xs text-sky-400 group-open:hidden">Show answer</span>
+            </summary>
+            <p className="mt-2 border-t border-zinc-800 pt-2 text-sm leading-6 text-emerald-300">{q.answer}</p>
+          </details>
+        ))}
+      </div>
+      <h3 className="mt-10 text-lg font-semibold text-zinc-100">Multiple choice</h3>
+      <p className="mt-1 text-sm text-zinc-400">Click an answer. You&apos;ll see right away if it&apos;s correct.</p>
+      <div className="mt-4">
+        <Quiz mcqs={notes.mcqs} />
+      </div>
 
       <TopicNav prev={prev} next={next} />
     </article>
+  );
+}
+
+const parts = [
+  { id: "theory", title: "1 · Theory" },
+  { id: "practical", title: "2 · Practical" },
+  { id: "key-points", title: "3 · Key points" },
+  { id: "mistakes", title: "4 · Common mistakes" },
+  { id: "quiz", title: "5 · Revision quiz" },
+];
+
+function PartHeading({ id }: { id: string }) {
+  const part = parts.find((p) => p.id === id);
+  return (
+    <h2 id={id} className="mb-6 mt-16 scroll-mt-16 border-b border-zinc-800 pb-2 text-2xl font-semibold text-zinc-100">
+      {part?.title}
+    </h2>
   );
 }
 

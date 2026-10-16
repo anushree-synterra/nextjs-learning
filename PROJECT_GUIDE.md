@@ -4,7 +4,7 @@
 > It explains what has been built, how it works, and what to do next.
 > When you start a new chat with Claude, tell it: **"Read PROJECT_GUIDE.md first."**
 
-Last updated: 2026-10-15
+Last updated: 2026-10-16
 
 ---
 
@@ -18,8 +18,8 @@ There are two parts:
 2. **The "Topics Covered" notes site** (`/topics`): a small docs-style website inside the app. It has the full
    learning plan in a left sidebar and your notes for each topic in the middle, so you can come back and revise.
 
-**Current status:** the notes site is built. **No topics have been learned yet (0 of 22).** The next step is
-Topic 01: Pages.
+**Current status:** **1 of 22 topics learned** (✓ Topic 01: Pages, on 2026-10-16). The next step is
+Topic 02: Root Layout.
 
 ---
 
@@ -60,6 +60,8 @@ Then open **http://localhost:3000**.
 | 9 | Added a **← Back to Home** link at the top of the sidebar. |
 | 10 | Made the overview page fuller: an intro to Next.js, a progress box, "How each topic works", and the full roadmap with one-line descriptions. |
 | 11 | Wrote this guide. |
+| 12 | **Learned Topic 01: Pages.** Built /about, /contact, /about/team, /shop (+ shoes, bags), /help/faq and /profile. |
+| 13 | Topic pages now show full notes: Theory, Practical (code + browser output), Key points, Common mistakes and a Revision quiz (short questions + clickable multiple choice). |
 
 > ✅ **Saved on GitHub:** https://github.com/anushree-synterra/nextjs-learning (branch `main`).
 > After each lesson, save and upload with:
@@ -80,15 +82,21 @@ nextjs-learning/
     │   ├── layout.tsx                ← Root layout: dark theme + top bar ("Topics Covered", "Next.js Learning")
     │   ├── page.tsx                  ← Home page (/). Learning starts here.
     │   ├── globals.css               ← Tailwind import + fonts
+    │   ├── about/, contact/, shop/,  ← pages built while learning Topic 01
+    │   │   help/faq/, profile/
     │   └── topics/
     │       ├── layout.tsx            ← Sidebar + middle content area (+ "Back to Home")
     │       ├── page.tsx              ← /topics overview page
     │       └── [slug]/page.tsx       ← /topics/<topic> page (notes, or "Not started yet")
     ├── components/
     │   ├── sidebar.tsx               ← The blueprint list in the sidebar (icons, hover effects)
-    │   └── active-sidebar.tsx        ← Works out which topic is open, so the sidebar can highlight it
+    │   ├── active-sidebar.tsx        ← Works out which topic is open, so the sidebar can highlight it
+    │   ├── notes.tsx                 ← Draws notes: text, code boxes, tips, tables, browser output
+    │   └── quiz.tsx                  ← The clickable multiple-choice quiz
     └── learning/
-        └── topics.ts                 ← ⭐ THE BLUEPRINT + YOUR NOTES (the only file you edit to record learning)
+        ├── topics.ts                 ← ⭐ THE BLUEPRINT (list of topics, done: true/false)
+        └── notes/
+            └── pages.ts              ← ⭐ Notes for Topic 01 (one file per learned topic)
 ```
 
 ---
@@ -126,79 +134,55 @@ You can rename, reorder or add topics in `src/learning/topics.ts`. The sidebar a
 
 ## 6. How each lesson works
 
-1. **Learn:** a short, plain explanation of the topic.
-2. **Build:** write real code in this project and see it in the browser.
-3. **Practice:** try a small change on your own.
-4. **Note:** record what you learned in `src/learning/topics.ts`. The topic gets a green ✓.
+**One topic per day, in depth.**
+
+1. **Learn:** Claude says which topic it is, then explains **what it is → why we use it → when we use it**,
+   in very plain words with real-life examples (like "folders are rooms, page.tsx is the light").
+2. **Build:** *you* type the code in this project. Claude gives the file and steps, but doesn't type it for you.
+3. **Check:** 2–3 tiny questions to make sure it makes sense.
+4. **Challenges:** levels from 😄 super easy → 🚀 bigger, one level at a time. Claude checks your files after each.
+5. **Notes (end of day, only when you feel confident):** Claude writes the topic up in the Topics Covered site.
 
 ---
 
-## 7. How to mark a topic as learned
+## 7. How a topic's notes are stored
 
-Open `src/learning/topics.ts`, find the topic and change it.
-
-**Before (not started):**
-
-```ts
-{ slug: "pages", title: "Pages", about: "How folders and page.tsx files turn into URLs in your app.", done: false },
-```
-
-**After (learned):**
+Each learned topic has its own notes file, `src/learning/notes/<slug>.ts` (for example `notes/pages.ts`).
+It is connected in `src/learning/topics.ts`:
 
 ```ts
-{
-  slug: "pages",
-  title: "Pages",
-  about: "How folders and page.tsx files turn into URLs in your app.",
-  done: true,
-  learnedOn: "2026-10-16",
-  summary: "Each folder in src/app is a URL. A page.tsx inside it is what shows at that URL. We made /about.",
-  points: [
-    "src/app/page.tsx is the home page (/).",
-    "src/app/about/page.tsx is /about.",
-    "The page component must be the default export.",
-  ],
-  code: [
-    {
-      file: "src/app/about/page.tsx",
-      code: `export default function About() {
-  return <h1>About me</h1>;
-}`,
-      explain: "Creating this one file made a new page at /about.",
-    },
-  ],
-},
+import { pagesNotes } from "./notes/pages";
+// ...
+{ slug: "pages", title: "Pages", about: "...", done: true, notes: pagesNotes },
 ```
 
-What changes when you save:
-- The sidebar icon turns from a dashed circle into a green ✓, and the title becomes brighter.
-- The topic's page shows **What we learned**, **Key points** and **Code we used**.
+The topic page (`/topics/<slug>`) then shows these parts:
+
+| Part | What's in it | Field in the notes file |
+|------|--------------|-------------------------|
+| In one line | A one-sentence summary | `summary` |
+| 1 · Theory | What / why / when, with examples, code, tips and warnings | `theory` |
+| 2 · Practical | Every challenge level: the task, the code you wrote, and the browser output | `challenges` |
+| 3 · Key points | A short checklist for quick revision | `keyPoints` |
+| 4 · Common mistakes | ❌ wrong → ✅ right, and why | `mistakes` |
+| 5 · Revision quiz | Short questions (click to reveal the answer) + clickable multiple choice with a score | `questions`, `mcqs` |
+
+What changes when a topic is set to `done: true`:
+- The sidebar icon turns from a dashed circle into a green ✓.
+- The topic's page shows the full notes above.
 - The progress bar on `/topics` goes up.
 
-| Field | Meaning |
-|-------|---------|
-| `slug` | The topic's URL name: `/topics/<slug>` |
-| `title` | Name shown in the sidebar |
-| `about` | One line saying what the topic teaches (shown before you start it) |
-| `done` | `false` = not started, `true` = learned |
-| `learnedOn` | Date you finished it |
-| `summary` | A short paragraph: what we learned |
-| `points` | Bullet list of key takeaways |
-| `code` | Code you wrote: file name, the code, and a one-line explanation |
+Text in notes can use `**bold**` and `` `code` ``. Use `notes/pages.ts` as the example for the next topics.
 
 ---
 
 ## 8. What to do next
 
-**➡️ Start Topic 01: Pages.**
+**➡️ Start Topic 02: Root Layout** (the shared frame, like a header, around every page).
 
-Suggested lesson plan:
-1. Learn that each folder in `src/app` is a URL and `page.tsx` makes it visible.
-2. Build: create `src/app/about/page.tsx` and open http://localhost:3000/about.
-3. Practice: make `/contact` yourself, then a nested page like `/about/team`.
-4. Note: fill in the Pages entry in `topics.ts` (see section 7) and set `done: true`.
+To revise Topic 01, open http://localhost:3000/topics/pages and do the Revision quiz.
 
-After that, continue in order: **02 Root Layout → 03 Linking Between Pages → …**
+Then continue in order: **03 Linking Between Pages → 04 CSS & Tailwind → …**
 
 ---
 
@@ -207,17 +191,17 @@ After that, continue in order: **02 Root Layout → 03 Linking Between Pages →
 Copy and paste this:
 
 ```
-Read PROJECT_GUIDE.md first. I'm learning Next.js using this project.
-Let's start the next topic in the blueprint (src/learning/topics.ts).
-Keep it simple and step by step: explain briefly, build it in the project with me,
-give me a small practice task, then update topics.ts with what we learned.
+Read PROJECT_GUIDE.md first. I'm a complete beginner learning Next.js using this project.
+Let's start the next topic in the blueprint (src/learning/topics.ts), following section 6:
+explain it simply (what / why / when), let me type the code, give me challenges level by level,
+and only when I say I understand, write the notes like src/learning/notes/pages.ts.
 ```
 
 **My preferences (for Claude to follow):**
-- Keep things **simple**. One topic at a time, nothing built in advance.
-- **Don't mark topics as learned** until we have actually learned them together.
+- Very simple words and real-life examples. One idea at a time, not too much at once.
+- I type the code myself.
+- **Don't mark topics as learned** or write notes until I say I understand.
 - Keep the **dark theme**, with readable text and simple, professional styling. Nothing too bright and no big buttons.
-- Give short explanations, then hands-on code.
 
 ---
 

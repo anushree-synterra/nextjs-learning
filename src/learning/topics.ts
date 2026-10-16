@@ -1,7 +1,51 @@
 // 📒 Next.js learning blueprint
 // Topics are learned in order, from top to bottom.
-// After learning a topic: set done: true, then fill in learnedOn, summary, points and code.
+// After learning a topic: write its notes in src/learning/notes/<slug>.ts,
+// then set done: true and notes: <thoseNotes> on the topic below.
 // It then gets a ✓ in the sidebar and its page shows the notes.
+
+import { pagesNotes } from "./notes/pages";
+
+// Text in notes can use **bold** and `code`.
+export type Block =
+  | { kind: "text"; text: string }
+  | { kind: "list"; items: string[] }
+  | { kind: "code"; file?: string; code: string; mark?: "good" | "bad" }
+  | { kind: "output"; url: string; view: OutputView }
+  | { kind: "callout"; tone: "tip" | "warn" | "idea"; text: string }
+  | { kind: "table"; head: string[]; rows: string[][] };
+
+// What the browser shows. Used to draw a small browser window in the notes.
+export type OutputView = { lines?: string[]; list?: string[]; notFound?: boolean };
+
+export type Section = { title: string; blocks: Block[] };
+
+export type Challenge = {
+  level: number;
+  title: string;
+  task: string;
+  file: string;
+  code: string;
+  output: { url: string; view: OutputView }[];
+  learned: string;
+};
+
+export type Mistake = { wrong: string; right: string; why: string };
+
+export type Question = { question: string; answer: string };
+
+export type Mcq = { question: string; options: string[]; answer: number; explain: string };
+
+export type TopicNotes = {
+  learnedOn: string;
+  summary: string;
+  theory: Section[];
+  challenges: Challenge[];
+  keyPoints: string[];
+  mistakes: Mistake[];
+  questions: Question[];
+  mcqs: Mcq[];
+};
 
 export type Topic = {
   slug: string;
@@ -9,10 +53,7 @@ export type Topic = {
   // One line: what this topic teaches. Shown before we start it.
   about: string;
   done: boolean;
-  learnedOn?: string;
-  summary?: string;
-  points?: string[];
-  code?: { file: string; code: string; explain: string }[];
+  notes?: TopicNotes;
 };
 
 export type Stage = {
@@ -26,7 +67,7 @@ export const blueprint: Stage[] = [
     name: "Stage 1 · Basics",
     goal: "Build simple pages, connect them and make them look good.",
     topics: [
-      { slug: "pages", title: "Pages", about: "How folders and page.tsx files turn into URLs in your app.", done: false },
+      { slug: "pages", title: "Pages", about: "How folders and page.tsx files turn into URLs in your app.", done: true, notes: pagesNotes },
       { slug: "root-layout", title: "Root Layout", about: "The shared frame (header, footer) that wraps every page.", done: false },
       { slug: "linking", title: "Linking Between Pages", about: "Moving between pages instantly with the <Link> component.", done: false },
       { slug: "css-tailwind", title: "CSS & Tailwind", about: "Styling with Tailwind classes: colors, spacing, layout and dark mode.", done: false },
