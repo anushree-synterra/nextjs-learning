@@ -20,7 +20,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
       <body className="min-h-full bg-zinc-950 font-sans text-zinc-200 [color-scheme:dark]">
         <header className="sticky top-0 z-10 flex h-12 items-center gap-6 border-b border-zinc-800 bg-zinc-950 px-4 text-sm">
           <Link href="/topics" className="text-zinc-100 hover:text-white">
@@ -31,6 +34,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </Link>
         </header>
         {children}
+        <footer className="flex h-12 items-center justify-center border-t border-zinc-800 bg-zinc-950 px-4 text-sm text-zinc-400">
+          <p>Made by Anushree while learning Next.js 🚀</p>
+        </footer>
       </body>
     </html>
   );

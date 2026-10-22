@@ -5,6 +5,7 @@
 // It then gets a ✓ in the sidebar and its page shows the notes.
 
 import { pagesNotes } from "./notes/pages";
+import { rootLayoutNotes } from "./notes/root-layout";
 
 // Text in notes can use **bold** and `code`.
 export type Block =
@@ -68,7 +69,7 @@ export const blueprint: Stage[] = [
     goal: "Build simple pages, connect them and make them look good.",
     topics: [
       { slug: "pages", title: "Pages", about: "How folders and page.tsx files turn into URLs in your app.", done: true, notes: pagesNotes },
-      { slug: "root-layout", title: "Root Layout", about: "The shared frame (header, footer) that wraps every page.", done: false },
+      { slug: "root-layout", title: "Root Layout", about: "The shared frame (header, footer) that wraps every page.", done: true, notes: rootLayoutNotes },
       { slug: "linking", title: "Linking Between Pages", about: "Moving between pages instantly with the <Link> component.", done: false },
       { slug: "css-tailwind", title: "CSS & Tailwind", about: "Styling with Tailwind classes: colors, spacing, layout and dark mode.", done: false },
       { slug: "fonts", title: "Fonts", about: "Loading Google or local fonts quickly with next/font.", done: false },

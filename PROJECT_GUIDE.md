@@ -18,8 +18,8 @@ There are two parts:
 2. **The "Topics Covered" notes site** (`/topics`): a small docs-style website inside the app. It has the full
    learning plan in a left sidebar and your notes for each topic in the middle, so you can come back and revise.
 
-**Current status:** **1 of 22 topics learned** (✓ Topic 01: Pages, on 2026-10-16). The next step is
-Topic 02: Root Layout.
+**Current status:** **2 of 22 topics learned** (✓ Topic 01: Pages, on 2026-10-16; ✓ Topic 02: Root Layout, on 2026-10-22).
+The next step is Topic 03: Linking Between Pages.
 
 ---
 
@@ -62,6 +62,7 @@ Then open **http://localhost:3000**.
 | 11 | Wrote this guide. |
 | 12 | **Learned Topic 01: Pages.** Built /about, /contact, /about/team, /shop (+ shoes, bags), /help/faq and /profile. |
 | 13 | Topic pages now show full notes: Theory, Practical (code + browser output), Key points, Common mistakes and a Revision quiz (short questions + clickable multiple choice). |
+| 14 | **Learned Topic 02: Root Layout.** Practised with an announcement bar, a padded {children} wrapper and {children} experiments; kept a footer on every page. |
 
 > ✅ **Saved on GitHub:** https://github.com/anushree-synterra/nextjs-learning (branch `main`).
 > After each lesson, save and upload with:
@@ -79,7 +80,7 @@ nextjs-learning/
 ├── next.config.ts                    ← Next.js settings (cacheComponents is ON)
 └── src/
     ├── app/
-    │   ├── layout.tsx                ← Root layout: dark theme + top bar ("Topics Covered", "Next.js Learning")
+    │   ├── layout.tsx                ← Root layout: dark theme + top bar + footer (shared by every page)
     │   ├── page.tsx                  ← Home page (/). Learning starts here.
     │   ├── globals.css               ← Tailwind import + fonts
     │   ├── about/, contact/, shop/,  ← pages built while learning Topic 01
@@ -96,7 +97,8 @@ nextjs-learning/
     └── learning/
         ├── topics.ts                 ← ⭐ THE BLUEPRINT (list of topics, done: true/false)
         └── notes/
-            └── pages.ts              ← ⭐ Notes for Topic 01 (one file per learned topic)
+            ├── pages.ts              ← ⭐ Notes for Topic 01 (one file per learned topic)
+            └── root-layout.ts        ← ⭐ Notes for Topic 02
 ```
 
 ---
@@ -178,11 +180,11 @@ Text in notes can use `**bold**` and `` `code` ``. Use `notes/pages.ts` as the e
 
 ## 8. What to do next
 
-**➡️ Start Topic 02: Root Layout** (the shared frame, like a header, around every page).
+**➡️ Start Topic 03: Linking Between Pages** (moving between pages with the <Link> component).
 
-To revise Topic 01, open http://localhost:3000/topics/pages and do the Revision quiz.
+To revise, open http://localhost:3000/topics/pages and http://localhost:3000/topics/root-layout and do the Revision quizzes.
 
-Then continue in order: **03 Linking Between Pages → 04 CSS & Tailwind → …**
+Then continue in order: **04 CSS & Tailwind → 05 Fonts → …**
 
 ---
 
