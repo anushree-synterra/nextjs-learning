@@ -18,8 +18,8 @@ There are two parts:
 2. **The "Topics Covered" notes site** (`/topics`): a small docs-style website inside the app. It has the full
    learning plan in a left sidebar and your notes for each topic in the middle, so you can come back and revise.
 
-**Current status:** **2 of 22 topics learned** (✓ Topic 01: Pages, on 2026-10-16; ✓ Topic 02: Root Layout, on 2026-10-22).
-The next step is Topic 03: Linking Between Pages.
+**Current status:** **3 of 22 topics learned** (✓ 01 Pages, 2026-10-16; ✓ 02 Root Layout, 2026-10-22; ✓ 03 Linking, 2026-10-23).
+The next step is Topic 04: CSS & Tailwind.
 
 ---
 
@@ -63,6 +63,8 @@ Then open **http://localhost:3000**.
 | 12 | **Learned Topic 01: Pages.** Built /about, /contact, /about/team, /shop (+ shoes, bags), /help/faq and /profile. |
 | 13 | Topic pages now show full notes: Theory, Practical (code + browser output), Key points, Common mistakes and a Revision quiz (short questions + clickable multiple choice). |
 | 14 | **Learned Topic 02: Root Layout.** Practised with an announcement bar, a padded {children} wrapper and {children} experiments; kept a footer on every page. |
+| 15 | **Learned Topic 03: Linking Between Pages.** Header menu (Home, About, Contact, Profile, Shop), links inside pages (Shop ↔ Shoes ↔ Bags, About ↔ Team), Quick links on Home, an external link on Contact. |
+| 16 | Session logs saved as Word files in `learning-sessions/` (for example `2026-10-22-session.docx`). |
 
 > ✅ **Saved on GitHub:** https://github.com/anushree-synterra/nextjs-learning (branch `main`).
 > After each lesson, save and upload with:
@@ -98,7 +100,8 @@ nextjs-learning/
         ├── topics.ts                 ← ⭐ THE BLUEPRINT (list of topics, done: true/false)
         └── notes/
             ├── pages.ts              ← ⭐ Notes for Topic 01 (one file per learned topic)
-            └── root-layout.ts        ← ⭐ Notes for Topic 02
+            ├── root-layout.ts        ← ⭐ Notes for Topic 02
+            └── linking.ts            ← ⭐ Notes for Topic 03
 ```
 
 ---
@@ -180,11 +183,11 @@ Text in notes can use `**bold**` and `` `code` ``. Use `notes/pages.ts` as the e
 
 ## 8. What to do next
 
-**➡️ Start Topic 03: Linking Between Pages** (moving between pages with the <Link> component).
+**➡️ Start Topic 04: CSS & Tailwind** (styling with Tailwind classes: colors, spacing, layout).
 
-To revise, open http://localhost:3000/topics/pages and http://localhost:3000/topics/root-layout and do the Revision quizzes.
+To revise, open http://localhost:3000/topics and do the Revision quiz for each learned topic.
 
-Then continue in order: **04 CSS & Tailwind → 05 Fonts → …**
+Then continue in order: **05 Fonts → 06 Images → …**
 
 ---
 

@@ -32,6 +32,23 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Link href="/" className="font-semibold text-zinc-100">
             Next.js Learning
           </Link>
+          <nav className="ml-auto flex gap-4 text-zinc-400">
+            <Link href="/" className="hover:text-white">
+              Home
+            </Link>
+            <Link href="/about" className="hover:text-white">
+              About
+            </Link>
+            <Link href="/contact" className="hover:text-white">
+              Contact
+            </Link>
+            <Link href="/profile" className="hover:text-white">
+              Profile
+            </Link>
+            <Link href="/shop" className="hover:text-white">
+              Shop
+            </Link>
+          </nav>
         </header>
         {children}
         <footer className="flex h-12 items-center justify-center border-t border-zinc-800 bg-zinc-950 px-4 text-sm text-zinc-400">
