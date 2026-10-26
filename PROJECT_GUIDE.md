@@ -18,8 +18,8 @@ There are two parts:
 2. **The "Topics Covered" notes site** (`/topics`): a small docs-style website inside the app. It has the full
    learning plan in a left sidebar and your notes for each topic in the middle, so you can come back and revise.
 
-**Current status:** **3 of 22 topics learned** (✓ 01 Pages, 2026-10-16; ✓ 02 Root Layout, 2026-10-22; ✓ 03 Linking, 2026-10-23).
-The next step is Topic 04: CSS & Tailwind.
+**Current status:** **4 of 22 topics learned** (✓ 01 Pages, 2026-10-16; ✓ 02 Root Layout, 2026-10-22; ✓ 03 Linking, 2026-10-23; ✓ 04 CSS & Tailwind, 2026-10-26).
+The next step is Topic 05: Fonts.
 
 ---
 
@@ -65,6 +65,7 @@ Then open **http://localhost:3000**.
 | 14 | **Learned Topic 02: Root Layout.** Practised with an announcement bar, a padded {children} wrapper and {children} experiments; kept a footer on every page. |
 | 15 | **Learned Topic 03: Linking Between Pages.** Header menu (Home, About, Contact, Profile, Shop), links inside pages (Shop ↔ Shoes ↔ Bags, About ↔ Team), Quick links on Home, an external link on Contact. |
 | 16 | Session logs saved as Word files in `learning-sessions/` (for example `2026-10-22-session.docx`). |
+| 17 | **Learned Topic 04: CSS & Tailwind.** Styled Profile (text, spacing, hobbies card), Shop (responsive hover cards), Contact, FAQ, Home (Quick links card), About (button link), Shoes/Bags (top bar) and Team (equal-width responsive cards). |
 
 > ✅ **Saved on GitHub:** https://github.com/anushree-synterra/nextjs-learning (branch `main`).
 > After each lesson, save and upload with:
@@ -101,7 +102,8 @@ nextjs-learning/
         └── notes/
             ├── pages.ts              ← ⭐ Notes for Topic 01 (one file per learned topic)
             ├── root-layout.ts        ← ⭐ Notes for Topic 02
-            └── linking.ts            ← ⭐ Notes for Topic 03
+            ├── linking.ts            ← ⭐ Notes for Topic 03
+            └── css-tailwind.ts       ← ⭐ Notes for Topic 04
 ```
 
 ---
@@ -183,11 +185,11 @@ Text in notes can use `**bold**` and `` `code` ``. Use `notes/pages.ts` as the e
 
 ## 8. What to do next
 
-**➡️ Start Topic 04: CSS & Tailwind** (styling with Tailwind classes: colors, spacing, layout).
+**➡️ Start Topic 05: Fonts** (loading Google or local fonts with next/font).
 
 To revise, open http://localhost:3000/topics and do the Revision quiz for each learned topic.
 
-Then continue in order: **05 Fonts → 06 Images → …**
+Then continue in order: **06 Images → 07 Nested Routes & Layouts → …**
 
 ---
 

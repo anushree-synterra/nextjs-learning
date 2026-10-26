@@ -7,6 +7,7 @@
 import { pagesNotes } from "./notes/pages";
 import { rootLayoutNotes } from "./notes/root-layout";
 import { linkingNotes } from "./notes/linking";
+import { cssTailwindNotes } from "./notes/css-tailwind";
 
 // Text in notes can use **bold** and `code`.
 export type Block =
@@ -72,7 +73,7 @@ export const blueprint: Stage[] = [
       { slug: "pages", title: "Pages", about: "How folders and page.tsx files turn into URLs in your app.", done: true, notes: pagesNotes },
       { slug: "root-layout", title: "Root Layout", about: "The shared frame (header, footer) that wraps every page.", done: true, notes: rootLayoutNotes },
       { slug: "linking", title: "Linking Between Pages", about: "Moving between pages instantly with the <Link> component.", done: true, notes: linkingNotes },
-      { slug: "css-tailwind", title: "CSS & Tailwind", about: "Styling with Tailwind classes: colors, spacing, layout and dark mode.", done: false },
+      { slug: "css-tailwind", title: "CSS & Tailwind", about: "Styling with Tailwind classes: colors, spacing, layout and dark mode.", done: true, notes: cssTailwindNotes },
       { slug: "fonts", title: "Fonts", about: "Loading Google or local fonts quickly with next/font.", done: false },
       { slug: "images", title: "Images", about: "Showing optimized, responsive images with next/image.", done: false },
     ],
