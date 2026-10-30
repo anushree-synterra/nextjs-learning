@@ -3,7 +3,9 @@ import Link from "next/link";
 export default function Shop() {
   return (
     <main className="p-8">
-      <h1 className="text-3xl font-bold text-sky-400">All products</h1>
+      <h1 className="text-3xl font-bold text-sky-400 font-fancy">
+        All products
+      </h1>
 
       <div className="mt-6 flex gap-4 flex-col md:flex-row">
         <Link

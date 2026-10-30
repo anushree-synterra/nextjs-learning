@@ -1,10 +1,16 @@
 import Link from "next/link";
+import { Bebas_Neue } from "next/font/google";
+
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export default function Team() {
   return (
     <main>
       <Link href="/about">← Back to About</Link>
-      <h1>Team</h1>
+      <h1 className={bebasNeue.className}>Team</h1>
       <p>We are a small team of passionate developers.</p>
       <div>
         <p>Team Members:</p>
