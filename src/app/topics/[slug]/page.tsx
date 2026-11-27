@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { BrowserOutput, CodeBlock, NoteBlock, Rich } from "@/components/notes";
 import { Quiz } from "@/components/quiz";
 import { allTopics, getStageName, getTopic, type Topic } from "@/learning/topics";
@@ -8,7 +9,17 @@ export function generateStaticParams() {
   return allTopics.map((topic) => ({ slug: topic.slug }));
 }
 
-export default async function TopicPage({ params }: PageProps<"/topics/[slug]">) {
+// partialPrefetching is on, so params (URL data) must be read inside <Suspense>.
+// The page passes the promise down, and TopicContent awaits it inside the boundary.
+export default function TopicPage({ params }: PageProps<"/topics/[slug]">) {
+  return (
+    <Suspense fallback={<p className="text-sm text-zinc-400">Loading topic…</p>}>
+      <TopicContent params={params} />
+    </Suspense>
+  );
+}
+
+async function TopicContent({ params }: Pick<PageProps<"/topics/[slug]">, "params">) {
   const { slug } = await params;
   const topic = getTopic(slug);
   if (!topic) notFound();

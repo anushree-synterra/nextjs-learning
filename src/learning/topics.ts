@@ -9,6 +9,7 @@ import { rootLayoutNotes } from "./notes/root-layout";
 import { linkingNotes } from "./notes/linking";
 import { cssTailwindNotes } from "./notes/css-tailwind";
 import { fontsNotes } from "./notes/fonts";
+import { imagesNotes } from "./notes/images";
 
 // Text in notes can use **bold** and `code`.
 export type Block =
@@ -76,7 +77,7 @@ export const blueprint: Stage[] = [
       { slug: "linking", title: "Linking Between Pages", about: "Moving between pages instantly with the <Link> component.", done: true, notes: linkingNotes },
       { slug: "css-tailwind", title: "CSS & Tailwind", about: "Styling with Tailwind classes: colors, spacing, layout and dark mode.", done: true, notes: cssTailwindNotes },
       { slug: "fonts", title: "Fonts", about: "Loading Google or local fonts quickly with next/font.", done: true, notes: fontsNotes },
-      { slug: "images", title: "Images", about: "Showing optimized, responsive images with next/image.", done: false },
+      { slug: "images", title: "Images", about: "Showing optimized, responsive images with next/image.", done: true, notes: imagesNotes },
     ],
   },
   {
